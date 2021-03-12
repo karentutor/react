@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import ContactForm from './components/forms/contactForm';
 import Portfolio from './components/portfolio';
+import ProtectedRoute from './components/common/protectedRoute';
 import RegisterForm from './components/forms/registerForm';
 import Entries from './components/entries';
 import NotFound from './components/notFound';
@@ -28,19 +29,21 @@ class App extends Component {
 
   render() {
 
+    const { user } = this.state;
+
     return (
       <>
         <ToastContainer />
-        <NavBar user={this.state.user} />
+        <NavBar user={user} />
         <Switch>
           <Route path="/home" component={Home} />
           <Route path="/resume" component={Resume} />
           <Route path="/portfolio" component={Portfolio} />
           <Route path="/contact" component={ContactForm} />
-          <Route path="/entries" component={Entries} />
           <Route path="/users" component={RegisterForm} />
           <Route path="/login" component={LoginForm} />
           <Route path="/logout" component={Logout} />
+          <ProtectedRoute path="/entries" component={Entries} />
           <Route path="/not-found" component={NotFound} />
           <Redirect from="/" exact to="/home" />
           <Redirect to="/not-found" />
